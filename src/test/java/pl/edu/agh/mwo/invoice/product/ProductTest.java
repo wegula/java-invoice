@@ -46,8 +46,7 @@ public class ProductTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testProductWithNullPrice() {
-		new DairyProduct("Banany", null);
+	public void testProductWithNullPrice() { new DairyProduct("Banany", null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
