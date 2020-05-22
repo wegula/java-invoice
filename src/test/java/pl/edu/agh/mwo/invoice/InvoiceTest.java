@@ -12,10 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.Invoice;
-import pl.edu.agh.mwo.invoice.product.DairyProduct;
-import pl.edu.agh.mwo.invoice.product.OtherProduct;
-import pl.edu.agh.mwo.invoice.product.Product;
-import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -158,7 +155,13 @@ public class InvoiceTest {
         invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 1);
         assertEquals(1, invoice.getItemsCounter());
 
+    }
 
+    @Test
+    public void testEscise() throws  Exception {
+        invoice.addProduct(new BottleOfWine("Wino", new BigDecimal("50")), 2);
+        invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 1);
+        Assert.assertThat(new BigDecimal("139.12"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
     }
 
 }
