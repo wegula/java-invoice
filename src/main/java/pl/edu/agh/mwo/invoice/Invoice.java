@@ -11,7 +11,7 @@ public class Invoice {
     private static int invoiceNumberCounter = 0;
     private int itemsCounter = 0;
 
-    public Invoice(){
+    public Invoice() {
         this.invoiceNumber = invoiceNumberCounter++;
     }
 
@@ -34,7 +34,7 @@ public class Invoice {
             products.put(product, quantity);
             itemsCounter++;
         }
-        
+
     }
 
     public BigDecimal getNetTotal() {
@@ -70,8 +70,8 @@ public class Invoice {
     public void print() {
 
         System.out.println("Numer faktury: " + this.invoiceNumber);
-        for (Product product: products.keySet()){
-            System.out.println(product.getName() + ", Szt.: " +products.get(product)
+        for (Product product : products.keySet()) {
+            System.out.println(product.getName() + ", Szt.: " + products.get(product)
                     + ", Cena: " + product.getPrice());
 
         }

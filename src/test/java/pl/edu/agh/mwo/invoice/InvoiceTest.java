@@ -112,9 +112,9 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testInvoiceHasNumber(){
+    public void testInvoiceHasNumber() {
         int number = invoice.getNumber();
-        Assert.assertTrue(number>0);
+        Assert.assertTrue(number > 0);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class InvoiceTest {
     public void testTwoInvoicesHaveConsequentNumbers() {
         int number = invoice.getNumber();
         int number2 = new Invoice().getNumber();
-        assertEquals(number,number2-1);
+        assertEquals(number, number2 - 1);
     }
 
     @Test
