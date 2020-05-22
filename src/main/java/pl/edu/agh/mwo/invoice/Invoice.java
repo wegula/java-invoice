@@ -8,7 +8,8 @@ import pl.edu.agh.mwo.invoice.product.Product;
 public class Invoice {
     private Map<Product, Integer> products = new LinkedHashMap<Product, Integer>();
     private int invoiceNumber = 0;
-    private static int invoiceNumberCounter =0;
+    private static int invoiceNumberCounter = 0;
+    private int itemsCounter = 0;
 
     public Invoice(){
         this.invoiceNumber = invoiceNumberCounter++;
@@ -22,7 +23,18 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        products.put(product, quantity);
+        boolean isProductExisting = false;
+        for (Product existingProduct : products.keySet()) {
+            if (product.getName().equals(existingProduct.getName())) {
+                products.computeIfPresent(existingProduct, (k, v) -> v + quantity);
+                isProductExisting = true;
+            }
+        }
+        if (!isProductExisting) {
+            products.put(product, quantity);
+            itemsCounter++;
+        }
+        
     }
 
     public BigDecimal getNetTotal() {
@@ -51,14 +63,18 @@ public class Invoice {
         return this.invoiceNumber;
     }
 
+    public int getItemsCounter() {
+        return itemsCounter;
+    }
+
     public void print() {
-        int productsCounter = 0;
-        System.out.println("Numer faktury: "+ this.invoiceNumber);
+
+        System.out.println("Numer faktury: " + this.invoiceNumber);
         for (Product product: products.keySet()){
             System.out.println(product.getName() + ", Szt.: " +products.get(product)
-                    + ", Cena: "+ product.getPrice());
-            productsCounter++;
+                    + ", Cena: " + product.getPrice());
+
         }
-        System.out.println("Liczba pozycji: "+productsCounter);
+        System.out.println("Liczba pozycji: " + this.itemsCounter);
     }
 }

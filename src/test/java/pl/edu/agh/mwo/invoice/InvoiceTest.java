@@ -151,4 +151,14 @@ public class InvoiceTest {
         assertEquals(expected.trim(), outContent.toString().trim());
     }
 
+    @Test
+    public void testDuplicateAdding() throws Exception {
+
+        invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 1);
+        invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 1);
+        assertEquals(1, invoice.getItemsCounter());
+
+
+    }
+
 }
