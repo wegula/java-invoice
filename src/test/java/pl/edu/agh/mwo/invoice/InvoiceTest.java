@@ -5,13 +5,13 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pl.edu.agh.mwo.invoice.Invoice;
 import pl.edu.agh.mwo.invoice.product.*;
 
 import static org.junit.Assert.assertEquals;
@@ -158,10 +158,26 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testEscise() throws  Exception {
+    public void testExcise() throws  Exception {
         invoice.addProduct(new BottleOfWine("Wino", new BigDecimal("50")), 2);
         invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 1);
         Assert.assertThat(new BigDecimal("139.12"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
+    @Test
+    public void testInvoiceValueOnTransportDay() {
+        LocalDate transportDay = LocalDate.of(2020, 4, 26);
+        invoice.addProduct(new FuelCanister("ON", new BigDecimal("100")),1);
+        invoice.setCurrentDate(transportDay);
+        Assert.assertThat(new BigDecimal("105.56"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
+    }
+
+    @Test
+    public void testInvoiceValueNotOnTransportDay() {
+        LocalDate notTransportDay = LocalDate.of(2020, 5, 26);
+        invoice.addProduct(new FuelCanister("ON", new BigDecimal("100")),1);
+        invoice.setCurrentDate(notTransportDay);
+        Assert.assertThat(new BigDecimal("128.56"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
     }
 
 }
